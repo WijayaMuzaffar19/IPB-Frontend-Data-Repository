@@ -3,7 +3,7 @@
 {% macro listify(list_) -%}
   {% for item in list_ or [] %}
     {% if item.path or item.url or item.web %}
-    <a href="{{item.path or item.url or item.web}}" title="{{item.title or item.email}}" target="_blank">
+    <a class="blue-link" href="{{item.path or item.url or item.web}}" title="{{item.title or item.email}}" target="_blank">
       {{item.type or item.title or item.name}}
     </a>
     {% else %}
@@ -40,7 +40,6 @@
                           <a href="/{{ package.organization.name or 'dataset' }}"><span>{{ package.organization.name or 'dataset' }}</span></a>
                       </li>
                       <li><img src="/static/img/folder.png" class="img-icons"/><span>Files {{ package.resources|length }}</span></li>
-                      <li><img src="/static/img/hard-disk.png" class="img-icons"/><span>N/A</span></li>
                     </ul>
                   </div>
                 </div>
@@ -49,15 +48,15 @@
                       {% if package.readmeSnippet %}
                       <p class="readme">
                         {{ package.readmeSnippet }}
-                        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
-                          Explore Dataset <span>&rsaquo;</span>
+                        <a class="blue-link" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
+                          Lebih Banyak <span>&rsaquo;</span>
                         </a>
                       </p>
                       {% elif package.readmeHtml %}
                       <p class="readme">
                         {{ package.readmeHtml|safe }}
-                        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
-                          Explore Dataset <span>&rsaquo;</span>
+                        <a class="blue-link" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
+                          Lebih Banyak <span>&rsaquo;</span>
                         </a>
                       </p>
                       {% elif package.description %}
@@ -67,8 +66,8 @@
                         {% else %}
                           {{ package.description }}
                         {% endif %}
-                        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
-                          Explore Dataset <span>&rsaquo;</span>
+                        <a class="blue-link" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
+                          Lebih Banyak <span>&rsaquo;</span>
                         </a>
                       </p>
                       {% endif %}

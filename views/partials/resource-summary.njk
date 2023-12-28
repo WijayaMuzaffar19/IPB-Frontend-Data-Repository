@@ -1,20 +1,20 @@
-<h2 class="section-title" id="data">Data Files</h2>
-<p>Download files in this dataset</p>
+<h2 class="section-title" id="data">File Dataset</h2>
+<p>Unduh file pada dataset ini</p>
 
 <div class="resource-listing part">
   <table class="table table-condensed table-striped resource-listing">
     <thead>
       <th class="col-xs-2">File</th>
-      <th class="col-xs-4">Description</th>
-      <th class="col-xs-1">Size</th>
-      <th class="col-xs-2">Last changed</th>
-      <th class="col-xs-4">Download</th>
+      <th class="col-xs-4">Deskripsi</th>
+      <th class="col-xs-1">Ukuran</th>
+      <th class="col-xs-2">Terakhir diubah</th>
+      <th class="col-xs-4">Unduh</th>
     </thead>
     <tbody>
     {% for item in dataset.displayResources %}
       <tr>
         <td class="col-xs-2">
-          <i class="far fa-file-alt"></i> <a href="#{{item.slug}}" onclick="scrollDown(this)" class="anchor-link" title="{{item.resource.title or item.resource.name}}">{{item.resource.title or item.resource.name}}</a>
+          <i class="far fa-file-alt"></i> <a href="#{{item.slug}}" onclick="scrollDown(this)" class="blue-link" title="{{item.resource.title or item.resource.name}}">{{item.resource.title or item.resource.name}}</a>
         </td>
         <td class="col-xs-4" title="{{ item.resource.descriptionHtml or item.resource.title }}">
           {{ (item.resource.descriptionHtml or item.resource.title) | safe }}
@@ -26,7 +26,7 @@
           {{ (item.resource.modified or item.resource.last_modified) | formatDateFromNow }}
         </td>
         <td class="download truncate col-xs-4">
-          <a href="{{ item.resource.path }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ item.esource.name }}', '{{ item.resource.format }}')">
+          <a class="blue-link" href="{{ item.resource.path }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ item.esource.name }}', '{{ item.resource.format }}')">
             {{ item.resource.format or 'Data file' }} {% if item.resource.size %}({{item.resource.sizeFormatted}}){% endif %}
           </a>
           {% for alt in item.resource.alternatives %}

@@ -23,7 +23,7 @@
 
         <p class="publisher">
           <img src="https://www.gravatar.com/avatar/none?d=https%3A%2F%2Ftesting.datahub.io%2Fstatic%2Fimg%2Flogo-cube03.png" class="img-responsive img-circle avatar" />
-          <a href="/{{ owner.name }}">{{ owner.title }}</a>
+          <a class="blue-link" href="/{{ owner.name }}">{{ owner.title }}</a>
         </p>
       </div>
     </div>
@@ -37,13 +37,12 @@
           <table class="table info no-left-padding">
             <thead>
               <tr>
-                <th>Files</th>
-                <th>Size</th>
+                <th>File</th>
+                <th>Ukuran</th>
                 <th>Format</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>License</th>
-                <th>Source</th>
+                <th>Dibuat</th>
+                <th>Diperbarui</th>
+                <th>Lisensi</th>
               </tr>
             </thead>
             <tbody>
@@ -62,11 +61,7 @@
                     <i class="fas fa-gavel"></i> {{snippets.listify([dataset.license])}}
                   {% endif %}
                 </td>
-                <td class="col-xs-2">
-                  {% if dataset.sources %}
-                    <i class="fas fa-external-link-square-alt"></i> {{snippets.listify(dataset.sources)}}
-                  {% endif %}
-                </td>
+                
               </tr>
             </tbody>
 
@@ -83,10 +78,7 @@
           <div class="readme-snippet readable-width">{{dataset.descriptionHtml|safe}}</div>
         {% endif %}
 
-        <!-- download button -->
-        <a href="#data" class="btn btn-lg btn-primary" onclick="scrollDown(this)">Download</a>
-        <!-- developers button -->
-        <a href="#data-cli" class="btn btn-lg btn-default" onclick="scrollDown(this)">Developers</a>
+        
 
         <!-- views -->
         <div class="react-me part" data-type="data-views" id="next-section"></div>
@@ -101,85 +93,18 @@
     </div>
   </div>
 
-  <!-- import into your tool section -->
-  <div class="section-gray">
-    <div class="container">
-      <div class="inner_container">
-        <div class="dataset show">
-          <h2 class="section-title">Integrate this dataset into your favourite tool</h2>
-          <ul class="nav nav-pills">
-            <li class="active"><a data-toggle="pill" href="#data-cli">data-cli</a></li>
-            <li><a data-toggle="pill" href="#curl">cURL</a></li>
-            <li><a data-toggle="pill" href="#r">R</a></li>
-            <li><a data-toggle="pill" href="#pandas">Pandas</a></li>
-            <li><a data-toggle="pill" href="#python">Python</a></li>
-            <li><a data-toggle="pill" href="#javascript">JavaScript</a></li>
-          </ul>
-          <!-- content for instructions -->
-          <div class="tab-content">
-
-            <div id="data-cli" class="tab-pane fade in active">
-              <div class="part">
-                {{instructions.data_cli(dataset)}}
-              </div>
-            </div>
-
-            <div id="curl" class="tab-pane fade">
-              <div class="part">
-                {{instructions.curl(dataset)}}
-              </div>
-            </div>
-
-            <div id="r" class="tab-pane fade">
-              <div class="part">
-                {{instructions.r(dataset)}}
-              </div>
-            </div>
-
-            <div id="pandas" class="tab-pane fade">
-              <div class="part">
-                {{instructions.pandas(dataset)}}
-              </div>
-            </div>
-
-            <div id="python" class="tab-pane fade">
-              <div class="part">
-                {{instructions.python(dataset)}}
-              </div>
-            </div>
-
-            <div id="javascript" class="tab-pane fade">
-              <div class="part">
-                {{instructions.javascript(dataset)}}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div><!-- end of import into your tool section -->
-
+  
   <!-- readme section -->
-  {% if dataset.readmeSnippet or dataset.readmeHtml %}
   <div class="container">
     <div class="inner_container">
       <div class="dataset show">
-        <h2 id="readme" class="section-title">Read me</h2>
+        <h2 id="readme" class="section-title">Pratinjau Dataset</h2>
         <div class="readme part readable-width">{{dataset.readmeHtml|safe}}</div>
       </div>
     </div>
   </div>
-  {% elif dataset.descriptionHtml %}
-  <div class="container">
-    <div class="inner_container">
-      <div class="dataset show">
-        <h2 id="readme" class="section-title">Read me</h2>
-        <div class="readme part readable-width">{{dataset.descriptionHtml|safe}}</div>
-      </div>
-    </div>
-  </div>
-  {% endif %}<!-- end of readme section -->
+
+
 
 
   <!-- Link to datapackage.json - putting here to be hidden for now -->

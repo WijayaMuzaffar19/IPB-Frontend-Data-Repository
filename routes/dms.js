@@ -14,6 +14,16 @@ const { param } = require('express-validator')
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 
+const multer = require('multer'); // Modul untuk menangani upload file
+const storage = multer.diskStorage({
+  destination: '/var/lib/ckan/default/storage/uploads/user',
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage}); // Multer middleware for handling file uploads
+
+
 module.exports = function () {
   const router = express.Router()
   const Model = new dms.DmsModel(config)
@@ -150,6 +160,52 @@ module.exports = function () {
       totalPages,
       pages,
       currentPage
+    })
+  })
+//router untuk ke halaman isi metadata
+  router.get('/create', async (req, res) => {
+    res.render('create.html', {
+      title: 'Create'
+    })
+  })
+
+//router untuk ke halaman upload file dataset
+  router.get('/upload', async (req, res) => {
+    res.render('upload.html', {
+      title: 'Upload Dataset'
+    })
+  })
+
+  //router untuk ke halaman notifikasi file berhasil diupload
+  router.get('/uploaded', async (req, res) => {
+    res.render('successUpload.html', {
+      title: 'File Uploaded'
+    })
+  })
+
+  // Tampilkan halaman login
+  router.get('/toLogin', async (req, res) => {
+    res.render('login.html', {
+      title: 'Login'
+    })
+  })
+
+  // Tampilkan halaman login
+  router.get('/createOrg', async (req, res) => {
+    res.render('createOrg.html', {
+      title: 'Buat Organisasi'
+    })
+  })
+
+  // Tampilkan halaman login
+  router.get('/orgCreated', async (req, res) => {
+    res.render('organization-created.html', {
+      title: 'Organisasi dibuat'
+    })
+  })
+  router.get('/orgError', async (req, res) => {
+    res.render('organization-error.html', {
+      title: 'Organisasi gagal dibuat'
     })
   })
 
@@ -320,6 +376,29 @@ module.exports = function () {
       currentPage
     })
   })
+
+  //Urai data formulir
+  router.use(express.urlencoded({ extended: false }));
+  //Urai data dengan json
+  router.use(express.json());
+  //Buat Router untuk fungsi membuat dataset
+  router.post('/create-dataset', (req, res) => {
+    //Panggil fungsi createDataset
+    Model.createDataset(req, res)
+  })
+  
+  // Rute untuk mengunggah dataset
+router.post('/upload-dataset', upload.single('datasetFile'), async (req, res) => {
+  // Dapatkan file dataset dari req.file
+  console.log('Path File:', req.file.path);
+  Model.createResource(req, res)
+})
+
+//Buat Router untuk fungsi membuat organisasi
+router.post('/create-organization', (req, res) => {
+  //Panggil fungsi createDataset
+  Model.createOrganization(req, res)
+})
 
   return router
 }

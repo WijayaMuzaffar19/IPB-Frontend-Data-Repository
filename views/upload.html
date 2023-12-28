@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Upload Dataset
+{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <title>Upload Dataset</title>
+</head>
+<body>
+    <div class="upload-page">
+        <h1 class="page-heading">Upload Dataset</h1>
+        <form class="upload-form" method="post" action="/upload-dataset" enctype="multipart/form-data">
+            <label for="datasetFile">Pilih Dataset:</label>
+            <input type="file" id="datasetFile" name="datasetFile" required>
+            <button type="submit">Unggah Dataset</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

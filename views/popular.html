@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% import '_snippets.html' as snippets %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block bodyclass %}popular{% endblock %}
+
+{% block content %}
+<section class="popular-page">
+  <div class="container">
+    <div class="inner-container">
+      <section class="heading">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Dataset Populer</h1>
+          </div>
+        </div>
+      </section>
+
+      <!-- Popular Datasets -->
+      <section class="popular-datasets">
+        {{ snippets.popular_dataset_list(popularDatasets) }}
+      </section>
+      <!-- End of Popular Datasets -->
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -43,8 +43,10 @@
   },
   "dependencies": {
     "@oryd/kratos-client": "0.0.0-next.b279b1f1b2a7",
+    "axios": "^1.6.1",
     "body-parser": "^1.19.0",
     "bytes": "^3.1.0",
+    "ckan": "^0.2.3",
     "connect-flash": "^0.1.1",
     "connect-redis": "^5.0.0",
     "cookie-parser": "^1.4.4",
@@ -67,6 +69,7 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nconf": "^0.10.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.16",

@@ -5,9 +5,9 @@
     <title>
       {% block title%}{{title}}{% endblock %}
     </title>
-    <meta name="author" content="Datopian">
+    <meta name="author" content="IPB Data Repository">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="img/ico" href="/static/img/favicon.ico" sizes="16x16">
+    <link rel="icon" type="img/ico" href="/static/img/ipbh.ico" sizes="16x16">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     {% if dataset %}
       <link rel="stylesheet" media="screen" href="https://rawcdn.githack.com/datopian/datapackage-views-js/681e1ff21a0daee03e8e81ad0ddc7c8bf682aee9/dist/css/main.css">
@@ -40,7 +40,7 @@
               <span class="icon-bar"></span>
             </button>
             <a class="main-logo pull-left" href="/">
-              <img class="img-responsive" src="/static/img/datahub-cube-edited.svg">
+              <img class="img-responsive" src="/static/img/ipbh.png">
             </a>
           </div>
           <!--
@@ -55,32 +55,23 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <a href="/about">About</a>
+                <a href="/createOrg">Buat Organisasi</a>
               </li>
               <li>
-                <a href="/news">News</a>
+                <a href="/create">Buat Dataset</a>
               </li>
               <li>
-                <a href="/search" class="find-data join-link">Find data</a>
+                <a class="blue-link" href="/search" class="find-data join-link">Cari Dataset</a>
               </li>
               <li>
-                <a href="/collections">Collections</a>
-              </li>
-              <li>
-                <a href="/requests">Requests</a>
-              </li>
-              <li>
-                <a href="/docs">Docs</a>
-              </li>
+             <!--
               <li>
                 <a href="/pricing">Pricing</a>
               </li>
               <li>
                 <a href="/download">Tools</a>
               </li>
-              <li>
-                <a href="https://gitter.im/datahubio/chat" class="chat" target="_blank">Chat</a>
-              </li>
+              -->
             </ul>
           </div>
         </div>
@@ -107,58 +98,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-3">
-                    <img class="img-responsive" src="/static/img/datahub-cube-edited.svg" width=60>
+                    <img class="img-responsive" src="/static/img/ipbh.png" width=60>
                     <br/>
-                    <p>At Datahub, we provide various solutions to Publish and Deploy your Data with power and simplicity. Datahub is the fastest way for individuals, teams and organizations to publish, deploy and share their data.</p>
+                    <p>Pada IPB Research Data Repository, kami menyediakan berbagai data penelitian yang dapat dimanfaatkan kembali untuk kegiatan penelitian lain</p>
                 </div>
 
                 <div class="col-sm-3 col-md-2 col-md-offset-1">
-                    <label>Links</label>
+                    <label class="blue-link">Tautan</label>
                     <ul>
                         <li>
-                            <a href="/">Home</a>
+                            <a href="/">Halaman Awal</a>
                         </li>
                         <li>
-                            <a href="/docs/terms-of-service">Terms of Service</a>
+                          <a href="https://repository.ipb.ac.id/" target="_blank">IPB Repository</a>
+                        </li>
+                        <li>
+                            <a href="/docs/terms-of-service">Ketentuan Pengguna</a>
                           </li>
-                        <li>
-                            <a href="/docs/privacy">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="http://docs.datahub.io/developers/api/">API</a>
-                        </li>
-                        <li>
-                            <a href="/news">News</a>
-                        </li>
-                        <li>
-                            <a href="https://old.datahub.io" target="_blank">Old DataHub</a>
-                        </li>
                     </ul>
                 </div>
 
                 <div class="col-sm-2">
-                    <label>Support</label>
+                    <label class="blue-link">Bantuan</label>
                     <ul>
-                        <li>
-                            <a href="/requests">Request Data</a>
-                        </li>
-                        <li>
-                            <a href="https://gitter.im/datahubio/chat">Chat</a>
-                        </li>
                         <li>
                             <a href="/docs/faq">FAQ</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-sm-3 col-md-2 col-md-offset-1">
-                    <label>Contact</label>
+                    <label class="blue-link">Kontak</label>
                     <ul>
                         <li>
-                            <a href="mailto:support@datahub.io">support@datahub.io</a>
+                            <a href="mailto:repository.data@ipb.ac.id">repository.data@ipb.ac.id</a>
                         </li>
-                        <!-- <li>
-                            <a href="#">+44 xxx xxxx</a>
-                        </li> -->
+                        <li>
+                            <a href="#">+62 xxx xxxx</a>
+                        </li> 
                     </ul>
                 </div>
             </div>

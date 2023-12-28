@@ -1,0 +1,37 @@
+<!-- views/create_organization.html -->
+{% extends "base.html" %}
+
+{% block title %}
+Tambah Organisasi
+{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <title>Tambah Organisasi Baru</title>
+</head>
+<body class="create-body">
+    <div class="metadata-form-container">
+      <h1>Tambah Organisasi Baru</h1>
+      <form method="post" action="create-organization" class="metadata-form">
+        <p>
+          <label for="organizationName">Nama Organisasi:</label>
+          <input type="text" id="organizationName" name="organizationName" required>
+        </p>
+        <p>
+          <label for="organizationTitle">Judul Organisasi:</label>
+          <input type="text" id="organizationTitle" name="organizationTitle" required>
+        </p>
+        <p>
+          <label for="organizationDescription">Deskripsi Organisasi:</label>
+          <textarea id="organizationDescription" name="organizationDescription" rows="5" cols="40"></textarea>
+        </p>
+        <p>
+          <button type="submit">Tambah Organisasi</button>
+        </p>
+      </form>
+    </div>
+  </body>
+</html>
+{% endblock %}
+

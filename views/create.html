@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title%}
+Metadata Form
+{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <title>Buat Dataset Baru</title>
+</head>
+<body class="create-body">
+    <div class="metadata-form-container">
+        <h1>Buat Dataset Baru</h1>
+        <form method="post" action="create-dataset" class="metadata-form"> 
+            <p>
+                <label for="title">Judul:</label>
+                <input type="text" id="title" name="title" required>
+            </p>
+            <p>
+                <label for="description">Deskripsi:</label>
+                <textarea id="description" name="description" rows="5" cols="40"></textarea>
+            </p>
+            <p>
+                <label for="owner">Organisasi:</label>
+                <input type="text" id="owner" name="owner" required>
+            </p>
+            <p>
+                <label for="license">Lisensi:</label>
+                <select id="license" name="license">
+                    <option value="">Pilih lisensi</option>
+                    <option value="cc-by">Creative Commons Attribution</option>
+                    <option value="cc-zero">Creative Commons CCZero</option>
+                    <option value="odc-by">Open Data Commons Attribution License</option>
+                    <option value="odc-odbl">Open Data Commons Open Data Database License (ODbL)</option>
+                    <option value="other-open">Other (Open)</option>
+                    <option value="other-closed">Other (Closed)</option>
+                </select>
+            </p>
+            <p>
+                <button type="submit">Buat Dataset</button>
+            </p>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}
