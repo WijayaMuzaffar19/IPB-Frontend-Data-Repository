@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title%}
+File Uploaded
+{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <title>Dataset Gagal Ditambahkan</title>
+</head>
+<body>
+    <div class="create-failed-container">
+        <div class="create-failed-content">
+            <h2 class="create-failed-title">Dataset Gagal Ditambahkan!</h2>
+            <p class="create-failed-description">Nama dataset yang dimasukkan sudah pernah dibuat atau organisasi yang anda masukkan salah</p>
+            <div class="create-failed-link">
+                <a href="/create">Coba Lagi</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

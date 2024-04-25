@@ -15,23 +15,41 @@ Tambah Organisasi
       <h1>Tambah Organisasi Baru</h1>
       <form method="post" action="create-organization" class="metadata-form">
         <p>
-          <label for="organizationName">Nama Organisasi:</label>
-          <input type="text" id="organizationName" name="organizationName" required>
+          <label for="organizationTitle">*Judul Organisasi:</label>
+          <input type="text" id="organizationTitle" name="organizationTitle" required>
         </p>
         <p>
-          <label for="organizationTitle">Judul Organisasi:</label>
-          <input type="text" id="organizationTitle" name="organizationTitle" required>
+          <label for="organizationName">Url: 172.17.254.1/organization/</label>
+          <input type="text" id="organizationName" name="organizationName" required readonly>
         </p>
         <p>
           <label for="organizationDescription">Deskripsi Organisasi:</label>
           <textarea id="organizationDescription" name="organizationDescription" rows="5" cols="40"></textarea>
         </p>
         <p>
+          <span class="required-text">*Informasi wajib diisi</span>
+      </p>
+        <p>
           <button type="submit">Tambah Organisasi</button>
         </p>
       </form>
     </div>
+    <script>
+      // Fungsi untuk menghasilkan teks dan memperbarui hasil
+      function generateAndDisplay() {
+            // Mendapatkan nilai dari input teks title
+            var titleInput = document.getElementById('organizationTitle').value;
+    
+            // Mengonversi teks title ke huruf kecil dan menggantikan spasi dengan tanda hubung
+            var generatedName = titleInput.toLowerCase().replace(/\s+/g, '-');
+    
+            // Menetapkan nilai input name
+            document.getElementById('organizationName').value = generatedName;
+        }
+    
+        // Menambahkan event listener untuk memanggil fungsi generateAndDisplay saat nilai input title berubah
+        document.getElementById('organizationTitle').addEventListener('input', generateAndDisplay);
+  </script>
   </body>
 </html>
 {% endblock %}
-

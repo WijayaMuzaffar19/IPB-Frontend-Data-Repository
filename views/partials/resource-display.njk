@@ -2,13 +2,17 @@
 
 <div class="resource-info part">
   <!-- Heading for each resource -->
-  
+  <h2>{{ item.resource.name }}</h2>
 
   <!-- Placeholder div elements for React components: preview tables -->
   {% for view in item.resource.views %}
     {% if view.specType == 'text' %}
     <div class="text-view overflow-scroll p-8 border border-solid rounded border-gray-300">
       {{ view.content }}
+    </div>
+    {% elseif view.specType == 'image' %}
+    <div>
+      <img src="{{ view.imageSrc }}" alt="{{ item.resource.name }}" class="img-responsive" />
     </div>
     {% else %}
     <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
@@ -17,6 +21,7 @@
       This is a preview version. There might be more data in the original version.
     </p>
   {% endfor %}
+
   <!-- End of div elements for React -->
   {% if item.resource.schema %}
    <h3 class="section-title">Field information</h3>

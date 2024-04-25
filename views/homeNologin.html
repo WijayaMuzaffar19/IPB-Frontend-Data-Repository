@@ -1,0 +1,73 @@
+{% extends "baseNologin.html" %}
+
+{% block title %}
+Data Repository IPB - Halaman Awal
+{% endblock %}
+
+{% block bodyclass %}home{% endblock %}
+
+{% block content %}
+<!-- Jumbotron main -->
+<div class="container">
+  <div class="inner_container home-banner">
+    <div class="jumbotron jumbotron-primary">
+      <div class="row demo">
+
+        <div class="col-md-6">
+            <img src="static/img/ip.png" class="img-responsive center-block hidden-xs"/>
+        </div>
+        <div class="col-md-6">
+            <div class="left-sec">
+                <h1>Repositori<br>Data Penelitian IPB </h1>
+                <p>Pada repositori data penelitian ini, tersedia data terbaru yang dapat menunjang penelitian anda</p>
+
+                <!-- Search -->
+                <section class="similar-search hidden-xs hidden-sm">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- searchbox -->
+                            <form class="search-form form form-inline" class="input-group col-xs-12" action="/search" method="GET">
+                            <div class="col-sm-8 pad-none">
+                                <input type="text" class="form-control input-lg" placeholder="Search ..." name="q" required />
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary" type="submit">Cari Dataset</button>
+                            </div>
+
+                            </form>
+                            <!-- search box ended -->
+                        </div>
+                    </div>
+                </section>
+                <!-- end of search -->
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- End of jumbotron main -->
+
+<!-- three element section -->
+<section class="three-elements" id="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="element">
+                    <div class="row">
+                            <div class="col-sm-3">
+                                <img src="static/img/core.png" class="img-responsive  center-block" />
+                            </div>
+                            <div class="col-sm-8 no-pad">
+                                <h4>Cari Dataset</h4>
+                                <p>Menampilkan seluruh dataset yang ada di repositori ini</p>
+                                <a class="blue-link" href="/search">Lebih Banyak &rsaquo;</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

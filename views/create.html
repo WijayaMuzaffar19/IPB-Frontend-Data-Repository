@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title%}
-Metadata Form
+{% block title %}
+    Metadata Form
 {% endblock %}
 
 {% block content %}
@@ -12,18 +12,55 @@ Metadata Form
 <body class="create-body">
     <div class="metadata-form-container">
         <h1>Buat Dataset Baru</h1>
-        <form method="post" action="create-dataset" class="metadata-form"> 
+        <form method="post" action="/create-dataset" class="metadata-form"> 
+
             <p>
-                <label for="title">Judul:</label>
+                <label for="title">*Judul:</label>
                 <input type="text" id="title" name="title" required>
             </p>
+            <p>
+                <label for="name">Url: 172.17.254.1/dataset/</label>                
+                <input type="text" id="name" name="name" required readonly>
+            </p>            
             <p>
                 <label for="description">Deskripsi:</label>
                 <textarea id="description" name="description" rows="5" cols="40"></textarea>
             </p>
             <p>
-                <label for="owner">Organisasi:</label>
+                <label for="authors">*Penulis:</label>
+                <input type="text" id="authors" name="authors" required>
+            </p>
+            <p>
+                <label for="date">*Tanggal terbit:</label>
+                <input type="date" id="date" name="date" required>
+            </p>
+            <p>
+                <label for="owner">*Organisasi:</label>
                 <input type="text" id="owner" name="owner" required>
+            </p>
+            <p>
+                <label for="citation">Sitasi:</label>
+                <input type="text" id="citation" name="citation">
+            </p>
+            <p>
+                <label for="type_of_scientific_work">*Jenis karya ilmiah:</label>
+                <select id="type_of_scientific_work" name="type_of_scientific_work" required>
+                    <option value=""></option>
+                    <option value="dataset">Dataset</option>
+                    <option value="student_paper">Student Paper</option>
+                    <option value="dissertation">Disertasi</option>
+                    <option value="master_thesis">Master Thesis</option>
+                    <option value="undergraduate_thesis">Undergraduate Thesis</option>
+                    <option value="article">Article</option>
+                </select>
+            </p>
+            <p>
+                <label for="series">No. series:</label>
+                <input type="text" id="series" name="series">
+            </p>
+            <p>
+                <label for="advisor">Penasihat:</label>
+                <input type="text" id="advisor" name="advisor">
             </p>
             <p>
                 <label for="license">Lisensi:</label>
@@ -38,10 +75,31 @@ Metadata Form
                 </select>
             </p>
             <p>
+                <span class="required-text">*Metadata wajib diisi</span>
+            </p>
+            <p>
                 <button type="submit">Buat Dataset</button>
             </p>
         </form>
     </div>
+
+    <!-- Script ditempatkan di akhir tag body -->
+    <script>
+        // Fungsi untuk menghasilkan teks dan memperbarui hasil
+        function generateAndDisplay() {
+            // Mendapatkan nilai dari input teks title
+            var titleInput = document.getElementById('title').value;
+    
+            // Mengonversi teks title ke huruf kecil dan menggantikan spasi dengan tanda hubung
+            var generatedName = titleInput.toLowerCase().replace(/\s+/g, '-');
+    
+            // Menetapkan nilai input name
+            document.getElementById('name').value = generatedName;
+        }
+    
+        // Menambahkan event listener untuk memanggil fungsi generateAndDisplay saat nilai input title berubah
+        document.getElementById('title').addEventListener('input', generateAndDisplay);
+    </script>    
 </body>
 </html>
 {% endblock %}

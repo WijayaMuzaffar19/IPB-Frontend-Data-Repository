@@ -13,10 +13,13 @@ const logger = require('../utils/logger')
 const { param } = require('express-validator')
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
+const axios = require('axios');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
 const multer = require('multer'); // Modul untuk menangani upload file
 const storage = multer.diskStorage({
-  destination: '/var/lib/ckan/default/storage/uploads/user',
+  destination: '/var/lib/ckan/default/storage/uploads/user',  
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
@@ -36,6 +39,8 @@ module.exports = function () {
     const DOMPurify = createDOMPurify(window);
     return DOMPurify.sanitize(value, { ALLOWED_TAGS: [] });
   }
+
+
 
   router.get('/dataset', (req, res) => {
     let destination = '/search'
@@ -89,6 +94,30 @@ module.exports = function () {
     res.type('text/plain')
     res.send("User-agent: *\nAllow: /");
   });
+
+  const verifyToken = (req, res, next) => {
+    // Ambil token dari cookie
+    const token = req.cookies.token;
+  
+    // Jika tidak ada token, kirim respons Unauthorized
+    if (!token) {
+      res.redirect('/login');
+    }
+  
+    try {
+      // Verifikasi token
+      const jwtSecret = process.env.JWT_SECRET; // Pastikan kunci rahasia sesuai dengan yang digunakan saat membuat token
+      const decoded = jwt.verify(token, jwtSecret);
+  
+      // Token valid, lanjutkan ke middleware berikutnya
+      req.user = decoded; // Jika Anda ingin menggunakan informasi pengguna dari token, Anda dapat menyimpannya di req.user
+      next();
+    } catch (error) {
+      // Tanggapi jika token tidak valid
+      res.redirect('/login');
+      // return res.status(401).json({ message: 'Unauthorized' });
+    }
+  }
 
   router.get('/', async (req, res) => {
     // If no CMS is enabled, show home page without posts
@@ -162,48 +191,135 @@ module.exports = function () {
       currentPage
     })
   })
+
+  // Endpoint untuk menangani permintaan login
+  router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+  
+    try {
+      // Coba login dengan endpoint /LoginMahasiswa
+      const responseMahasiswa = await axios.post('https://api.ipb.ac.id/v1/Authentication/LoginMahasiswa', {
+        username,
+        password
+      }, {
+        headers: {
+          'X-IPBAPI-TOKEN': 'Bearer 2ead4c81-023a-4419-9d97-c66061559ec9'
+        }
+      });
+  
+      // Jika berhasil, kirimkan respons dengan data yang diterima
+      const payload = { mahasiswa: responseMahasiswa.data };
+      const jwtSecret = process.env.JWT_SECRET;
+      const expiresIn = 60 * 60 * 1;
+      const token = jwt.sign(payload, jwtSecret, { expiresIn: expiresIn });
+      const nama = responseMahasiswa.data.Nama; // Ambil nilai nama dan nim dari responseMahasiswa.data
+      const nim = responseMahasiswa.data.nim;
+      res.cookie('token', token, { httpOnly: true, maxAge: 3600 * 1000 });
+      // res.json(responseMahasiswa.data);
+      // res.json({ token, nama, nim });
+      console.log('Data pengguna:', responseMahasiswa.data);
+      res.redirect('/');
+    } catch (error) {
+      // Jika gagal login dengan /LoginMahasiswa, coba dengan /LoginDosen
+      try {
+        const responseDosen = await axios.post('https://api.ipb.ac.id/v1/Authentication/LoginDosen', {
+          username,
+          password
+        }, {
+          headers: {
+            'X-IPBAPI-TOKEN': 'Bearer 2ead4c81-023a-4419-9d97-c66061559ec9'
+          }
+        });
+  
+        // Jika berhasil, kirimkan respons dengan data yang diterima
+        const payload = { mahasiswa: responseDosen.data };
+        const jwtSecret = process.env.JWT_SECRET;
+        const expiresIn = 60 * 60 * 1;
+        const token = jwt.sign(payload, jwtSecret, { expiresIn: expiresIn });
+        const nama = responseDosen.data.Nama; // Ambil nilai nama dan nim dari responseMahasiswa.data
+        const nip = responseDosen.data.nip;
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600 * 1000 });
+      console.log('Data pengguna:', responseDosen.data);
+      res.redirect('/');
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          // Unauthorized: username/password salah
+          const errorMessage = error.response.data.error;
+          res.render('auth/loginerror.html', { login_error: errorMessage });
+          //res.status(401).send('Incorrect username or password.');
+        } else {
+          // Kesalahan lain yang tidak terduga
+          console.error(error);
+          res.status(500).send('Internal Server Error');
+        }
+      }
+    }
+  })
+  
+  
+
+
+
 //router untuk ke halaman isi metadata
-  router.get('/create', async (req, res) => {
+  router.get('/create', verifyToken, async (req, res) => {
     res.render('create.html', {
       title: 'Create'
     })
   })
-
+  router.get('/createError', verifyToken, async (req, res) => {
+    res.render('createError.html', {
+      title: 'Dataset Gagal Ditambahkan'
+    })
+  })
 //router untuk ke halaman upload file dataset
-  router.get('/upload', async (req, res) => {
+  router.get('/upload', verifyToken, async (req, res) => {
     res.render('upload.html', {
       title: 'Upload Dataset'
     })
   })
 
   //router untuk ke halaman notifikasi file berhasil diupload
-  router.get('/uploaded', async (req, res) => {
+  router.get('/uploaded', verifyToken, async (req, res) => {
     res.render('successUpload.html', {
       title: 'File Uploaded'
     })
   })
 
   // Tampilkan halaman login
-  router.get('/toLogin', async (req, res) => {
-    res.render('login.html', {
-      title: 'Login'
-    })
+  router.get('/login', async (req, res) => {
+    // Cek apakah pengguna sudah login
+    if (req.cookies.token) {
+      // Pengguna sudah login, arahkan ke halaman home
+      res.redirect('/');
+    } else {
+      // Pengguna belum login, tampilkan halaman login
+      res.render('auth/login.html', {
+        title: 'Login'
+      });
+    }
+  })
+  
+  router.get('/logout', (req, res) => {
+    // Hapus cookie token dengan mengatur ulang nilainya dan menetapkan masa berlaku yang telah berlalu
+    res.clearCookie('token');
+    // Redirect pengguna ke halaman lain setelah logout
+    res.redirect('/');
   })
 
   // Tampilkan halaman login
-  router.get('/createOrg', async (req, res) => {
+  router.get('/createOrg', verifyToken, async (req, res) => {
     res.render('createOrg.html', {
       title: 'Buat Organisasi'
     })
   })
 
   // Tampilkan halaman login
-  router.get('/orgCreated', async (req, res) => {
+  router.get('/orgCreated', verifyToken, async (req, res) => {
     res.render('organization-created.html', {
       title: 'Organisasi dibuat'
     })
   })
-  router.get('/orgError', async (req, res) => {
+  router.get('/orgError', verifyToken, async (req, res) => {
     res.render('organization-error.html', {
       title: 'Organisasi gagal dibuat'
     })
@@ -323,8 +439,8 @@ module.exports = function () {
   router.get('/organization', async (req, res, next) => {
     const collections = await Model.getOrganizations()
     res.render('collections-home.html', {
-      title: 'Organizations',
-      description: 'CKAN Organizations are used to create, manage and publish collections of datasets. Users can have different roles within an Organization, depending on their level of authorisation to create, edit and publish.',
+      title: 'Organisasi',
+      description: 'Organisasi untuk membuat, mengelola, dan mempublikasikan data.',
       collections,
       slug: 'organization'
     })
@@ -381,10 +497,10 @@ module.exports = function () {
   router.use(express.urlencoded({ extended: false }));
   //Urai data dengan json
   router.use(express.json());
-  //Buat Router untuk fungsi membuat dataset
-  router.post('/create-dataset', (req, res) => {
-    //Panggil fungsi createDataset
-    Model.createDataset(req, res)
+  // Router untuk endpoint /create-dataset dengan middleware verifikasi token
+  router.post('/create-dataset', verifyToken, (req, res) => {
+    // Panggil fungsi createDataset
+    Model.createDataset(req, res);
   })
   
   // Rute untuk mengunggah dataset

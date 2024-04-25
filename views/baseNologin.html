@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      {% block title%}{{title}}{% endblock %}
+    </title>
+    <meta name="author" content="IPB Data Repository">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="img/ico" href="/static/img/ipbh.ico" sizes="16x16">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    {% if dataset %}
+      <link rel="stylesheet" media="screen" href="https://rawcdn.githack.com/datopian/datapackage-views-js/681e1ff21a0daee03e8e81ad0ddc7c8bf682aee9/dist/css/main.css">
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css">
+    {% endif %}
+    <link rel="stylesheet" media="screen" href="/static/stylesheets/app.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script id="ga-gtag" async></script>
+
+    <script>
+        document.getElementById("ga-gtag").src = "https://www.googletagmanager.com/gtag/js?id={{ $GA_ID }}";
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ $GA_ID }}');
+    </script>
+  </head>
+  <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
+    <!-- Page header -->
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="inner_container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="main-logo pull-left" href="/">
+              <img class="img-responsive" src="/static/img/ipbh.png">
+            </a>
+          </div>
+          <!--
+          <div class="nav navbar-nav searchbox">
+            <form class="form-inline" action="/search" method="GET">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Find data" name="q">
+              </div>
+            </form>
+          </div>
+          -->
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a class="blue-link" href="/search" class="find-data join-link">Cari Dataset</a>
+              </li>
+              <li>
+                <a class="blue-link" href="/login" class="find-data join-link">Login</a>
+              </li>
+              <li>
+             <!--
+              <li>
+                <a href="/pricing">Pricing</a>
+              </li>
+              <li>
+                <a href="/download">Tools</a>
+              </li>
+              -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of page header -->
+
+    <!-- Alert messages -->
+    {% if message.length > 0 %}
+    <div class="container">
+      <div class="inner_container">
+        <div class="alert alert-danger" role="alert">{{ message | safe }}</div>
+      </div>
+    </div>
+    {% endif %}
+    <!-- End of Alert messages -->
+
+    {% block content %}{{content}}{% endblock %}
+
+
+    <!-- Footer -->
+    {% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-3">
+                    <img class="img-responsive" src="/static/img/ipbh.png" width=60>
+                    <br/>
+                    <p>Pada IPB Research Data Repository, kami menyediakan berbagai data penelitian yang dapat dimanfaatkan kembali untuk kegiatan penelitian lain</p>
+                </div>
+
+                <div class="col-sm-3 col-md-2 col-md-offset-1">
+                    <label class="blue-link">Tautan</label>
+                    <ul>
+                        <li>
+                            <a href="/">Halaman Awal</a>
+                        </li>
+                        <li>
+                          <a href="https://repository.ipb.ac.id/" target="_blank">IPB Repository</a>
+                        </li>
+                        <li>
+                            <a href="/docs/terms-of-service">Ketentuan Pengguna</a>
+                          </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-2">
+                    <label class="blue-link">Bantuan</label>
+                    <ul>
+                        <li>
+                            <a href="/docs/faq">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 col-md-2 col-md-offset-1">
+                    <label class="blue-link">Kontak</label>
+                    <ul>
+                        <li>
+                            <a href="mailto:repository.data@ipb.ac.id">repository.data@ipb.ac.id</a>
+                        </li>
+                        <li>
+                            <a href="#">+62 xxx xxxx</a>
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+    <!-- end of footer -->
+
+    {% block scripts %}{% endblock %}
+
+  </body>
+</html>

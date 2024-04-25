@@ -69,14 +69,64 @@
 
         </div>
 
-        <!-- short readme -->
+        <!-- Metadata section -->
+        <div class="container">
+          <div class="inner_container">
+            <div class="dataset show">
+              <h2 class="section-title">Metadata</h2>
+              <div class="metadata-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Example metadata fields, replace these with your actual metadata -->
+                    <tr>
+                      <td>Title</td>
+                      <td>{{ dataset.title or 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Description</td>
+                      <td>{{ dataset.description or 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Author</td>
+                      <td>{{ dataset.authors or 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Advisor</td>
+                      <td>{{ dataset.advisor or 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Type of Scientific Work</td>
+                      <td>{{ dataset.type_of_scientific_work or 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Date of issue</td>
+                      <td>{{ dataset.date_of_issue or 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Language</td>
+                      <td>{{ dataset.language or 'N/A' }}</td>
+                    </tr>
+                    <!-- Add more rows for other metadata fields -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- short readme 
         {% if dataset.readmeSnippet %}
           <div class="readme-snippet readable-width">{{dataset.readmeSnippet}} <a href="#readme" onclick="scrollDown(this)">read more</a></div>
         {% elif dataset.readmeHtml %}
           <div class="readme-snippet readable-width">{{dataset.readmeHtml|safe}}</div>
         {% elif dataset.descriptionHtml %}
           <div class="readme-snippet readable-width">{{dataset.descriptionHtml|safe}}</div>
-        {% endif %}
+        {% endif %} -->
 
         
 
@@ -110,10 +160,19 @@
   <!-- Link to datapackage.json - putting here to be hidden for now -->
   <div class="container">
     <div class="inner_container">
+      <!-- Link RDF untuk dataset dalam format RDF/XML -->
+      <a href="http://172.17.1.254/dataset/{{ dataset.name }}.rdf" class="btn btn-default" style="margin-top:-80px" target="_blank">RDF/XML</a>
+
+      <!-- Link RDF untuk dataset dalam format json-ld -->
+      <a href="http://172.17.1.254/dataset/{{ dataset.name }}.jsonld" class="btn btn-default" style="margin-top:-80px" target="_blank">JSON-LD</a>
+
+      <!-- Link datapackage.json untuk dataset -->
       <a href="/{{ owner.name }}/{{ dataset.name }}/datapackage.json" class="btn btn-default" style="margin-top:-80px">Datapackage.json</a>
+
+      <!-- Tambahkan link untuk format RDF lainnya sesuai kebutuhan -->
     </div>
   </div><!-- end of link to datapackage.json -->
-
+  
 </div>
 
 <div class="react-me-datapackage-views" data-datapackage-json='{{ dpId | safe }}'></div>
@@ -124,6 +183,7 @@
 {% block scripts %}
 <!-- script for tabs to work as anchors (used for instructions in showcase page) -->
 <script>
+  
   jQuery("ul.nav-pills > li > a").on("shown.bs.tab", function (e) {
      scrollposition = jQuery(document).scrollTop();
      var id = jQuery(e.target).attr("href").substr(1);

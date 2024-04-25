@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h3 class="py-5 text-orange font-bold text-center">Log in Data Repository IPB</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if login_error %}
+            <div class="alert alert-danger" role="alert">{{ login_error }}</div>
+            {% endif %}
+            <form action="/login" method="post" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                </div>
+                <p class="loginerror">
+                  Your username or password is incorrect
+                </p>                
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
